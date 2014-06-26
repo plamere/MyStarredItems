@@ -92,52 +92,53 @@ function authorizeUser() {
 }
 
 function parseArgs() {
-	var hash = location.hash.replace(/#/g, '');
-	var all = hash.split('&');
-	var args = {};
+    var hash = location.hash.replace(/#/g, '');
+    var all = hash.split('&');
+    var args = {};
     _.each(all, function(keyvalue) {
         var kv = keyvalue.split('=');
         var key = kv[0];
         var val = kv[1];
-		args[key] = val;
-	});
+        args[key] = val;
+    });
     return args;
 }
 
 function fetchCurrentUserProfile(callback) {
-	var url = 'https://api.spotify.com/v1/me';
+    var url = 'https://api.spotify.com/v1/me';
     callSpotify(url, null, callback);
 }
 
 function fetchStarredItems(id, callback) {
-	var url = 'https://api.spotify.com/v1/users/' + id + '/starred';
+    var url = 'https://api.spotify.com/v1/users/' + id + '/starred';
     callSpotify(url, playlistFields, callback);
 }
 
 function callSpotify(url, data, callback) {
-	$.ajax(url, {
-		dataType: 'json',
+    $.ajax(url, {
+        dataType: 'json',
         data: data,
-		headers: {
-			'Authorization': 'Bearer ' + accessToken
-		},
-		success: function(r) {
-			callback(r);
-		},
-		error: function(r) {
-			callback(null);
-		}
-	});
+        headers: {
+            'Authorization': 'Bearer ' + accessToken
+        },
+        success: function(r) {
+            callback(r);
+        },
+        error: function(r) {
+            callback(null);
+        }
+    });
 }
 
 function showTracks(tracks) {
+    var list = $("#item-list");
+
     if (tracks.offset == 0) {
         $("#main").show();
         $("#intro").hide();
         $("#item-list").empty();
         info("");
     }
-    var list = $("#item-list");
     _.each(tracks.items, function(item) {
         var artistName = item.track.artists[0].name;
         var itemElement = $("<div>").text(item.track.name + ' - ' + artistName);
@@ -181,9 +182,9 @@ $(document).ready(
                 authorizeUser();
             });
         }
-
     }
 );
+
 </script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 </body>
