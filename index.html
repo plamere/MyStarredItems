@@ -72,6 +72,10 @@ var playlistFields = {
     fields:'tracks.offset,tracks.next,tracks.items(track(name,artists))'
 };
 
+var trackFields = {
+    fields:'offset,next,items(track(name,artists))'
+};
+
 function error(msg) {
     info(msg);
 }
@@ -133,6 +137,7 @@ function callSpotify(url, data, callback) {
 function showTracks(tracks) {
     var list = $("#item-list");
 
+    console.log('show tracks', tracks);
     if (tracks.offset == 0) {
         $("#main").show();
         $("#intro").hide();
@@ -146,7 +151,7 @@ function showTracks(tracks) {
     });
 
     if (tracks.next) {
-        callSpotify(tracks.next, playlistFields, function(tracks) {
+        callSpotify(tracks.next, trackFields, function(tracks) {
             showTracks(tracks);
         });
     }
